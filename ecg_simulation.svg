@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340">
+  <rect width="100%" height="100%" fill="#111"/>
+  <text x="40" y="36" fill="#ddd" font-family="Consolas, monospace" font-size="18">
+    ECG simulation: 4 cycles, X size 40 pulses/point, Y size 8 pulses/level
+  </text>
+  <line x1="40" y1="250" x2="680" y2="250" stroke="#333" stroke-width="1"/>
+  <g transform="translate(40 250) scale(0.12 -1)">
+    <defs>
+      <polyline id="ecg-cycle" points="
+        0,0 40,0 80,0 120,8 160,24 200,40 240,24 280,8
+        320,0 360,-16 400,64 440,192 480,48 520,-40 560,0 600,0
+        640,16 680,40 720,72 760,80 800,64 840,32 880,8 920,0
+      "/>
+    </defs>
+    <use href="#ecg-cycle" x="0" stroke="#f5f5f5" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <use href="#ecg-cycle" x="920" stroke="#f5f5f5" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <use href="#ecg-cycle" x="1840" stroke="#f5f5f5" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <use href="#ecg-cycle" x="2760" stroke="#f5f5f5" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  <text x="40" y="310" fill="#aaa" font-family="Consolas, monospace" font-size="14">
+    One cycle: small P wave, tall sharp R wave, wider T wave. Actual paper trace can vary with motor inertia and laser spot size.
+  </text>
+</svg>

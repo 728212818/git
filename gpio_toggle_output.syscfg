@@ -1,0 +1,91 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0G350X" --package "LQFP-64(PM)" --part "Default" --product "mspm0_sdk@2.01.00.03"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1  = GPIO.addInstance();
+const GPIO2  = GPIO.addInstance();
+const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
+const TIMER  = scripting.addModule("/ti/driverlib/TIMER", {}, false);
+const TIMER1 = TIMER.addInstance();
+const UART   = scripting.addModule("/ti/driverlib/UART", {}, false);
+const UART1  = UART.addInstance();
+const UART2  = UART.addInstance();
+const UART3  = UART.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+GPIO1.$name                         = "laser";
+GPIO1.associatedPins[0].$name       = "PIN_0";
+GPIO1.associatedPins[0].pin.$assign = "PB13";
+
+const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
+
+GPIO2.$name                         = "Button";
+GPIO2.associatedPins.create(3);
+GPIO2.associatedPins[0].$name       = "Button1";
+GPIO2.associatedPins[0].direction   = "INPUT";
+GPIO2.associatedPins[0].internalResistor = "PULL_UP";
+GPIO2.associatedPins[0].pin.$assign = "PB21";
+GPIO2.associatedPins[1].$name       = "Button2";
+GPIO2.associatedPins[1].direction   = "INPUT";
+GPIO2.associatedPins[1].internalResistor = "PULL_UP";
+GPIO2.associatedPins[1].pin.$assign = "PB14";
+GPIO2.associatedPins[2].$name       = "Button3";
+GPIO2.associatedPins[2].direction   = "INPUT";
+GPIO2.associatedPins[2].internalResistor = "PULL_UP";
+GPIO2.associatedPins[2].pin.$assign = "PB15";
+
+SYSCTL.forceDefaultClkConfig = true;
+SYSCTL.clockTreeEn           = true;
+
+TIMER1.$name             = "CONTROL_TIMER";
+TIMER1.timerClkPrescale  = 256;
+TIMER1.timerPeriod       = "10 ms";
+TIMER1.timerMode         = "PERIODIC";
+TIMER1.interrupts        = ["ZERO"];
+TIMER1.interruptPriority = "2";
+
+UART1.$name                    = "UART_0";
+UART1.enabledInterrupts        = ["RX"];
+UART1.targetBaudRate           = 115200;
+UART1.peripheral.$assign       = "UART0";
+UART1.peripheral.rxPin.$assign = "PA11";
+UART1.peripheral.txPin.$assign = "PA10";
+UART1.txPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric0";
+UART1.rxPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric1";
+
+UART2.$name              = "UART_1";
+UART2.targetBaudRate     = 115200;
+UART2.enabledInterrupts  = ["RX"];
+UART2.peripheral.$assign = "UART1";
+UART2.peripheral.rxPin.$assign = "PA18";
+UART2.peripheral.txPin.$assign = "PA8";
+UART2.txPinConfig.$name  = "ti_driverlib_gpio_GPIOPinGeneric2";
+UART2.rxPinConfig.$name  = "ti_driverlib_gpio_GPIOPinGeneric3";
+
+UART3.$name              = "UART_2";
+UART3.enabledInterrupts  = ["RX"];
+UART3.targetBaudRate     = 38400;
+UART3.peripheral.$assign = "UART2";
+UART3.txPinConfig.$name  = "ti_driverlib_gpio_GPIOPinGeneric4";
+UART3.rxPinConfig.$name  = "ti_driverlib_gpio_GPIOPinGeneric5";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+Board.peripheral.$suggestSolution            = "DEBUGSS";
+Board.peripheral.swclkPin.$suggestSolution   = "PA20";
+Board.peripheral.swdioPin.$suggestSolution   = "PA19";
+TIMER1.peripheral.$suggestSolution           = "TIMA0";
+UART3.peripheral.rxPin.$suggestSolution      = "PA22";
+UART3.peripheral.txPin.$suggestSolution      = "PA21";
